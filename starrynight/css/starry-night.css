@@ -149,22 +149,6 @@ body {
     box-shadow: none !important;
     backdrop-filter: none !important;
 }
-.fi-grid-col{
-    background: transparent !important;
-    background-color: transparent !important;
-}
-.fi-ta-record-content{
-    background: transparent !important;
-    background-color: transparent !important;
-}
-.fi-ta-record-content-ctn{
-    background: transparent !important;
-    background-color: transparent !important;
-}
-.fi-ta-record{
-    background: transparent !important;
-    background-color: transparent !important;
-}
 .fi-ta-ctn-header,
 .fi-sc-tabs{
     background: transparent !important;
