@@ -99,7 +99,7 @@ class StarryNightPlugin implements Plugin
     function apply() {
         var info = detectThemeDetail();
 
-        if (!info || info.source === 'default' || info.source === 'prefers-color-scheme') {
+        if (!info) {
             return info;
         }
 
@@ -130,7 +130,7 @@ class StarryNightPlugin implements Plugin
 
     try { apply(); } catch (e) {}
 })();
-<1script>
+</script>
 HTML;
         });
 
