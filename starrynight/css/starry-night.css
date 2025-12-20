@@ -143,6 +143,28 @@ body {
     background: transparent !important;
     background-color: transparent !important;
 }
+.fi-ta-content.fi-ta-content-grid.fi-grid.md\:fi-grid-cols {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+}
+.fi-grid-col{
+    background: transparent !important;
+    background-color: transparent !important;
+}
+.fi-ta-record-content{
+    background: transparent !important;
+    background-color: transparent !important;
+}
+.fi-ta-record-content-ctn{
+    background: transparent !important;
+    background-color: transparent !important;
+}
+.fi-ta-record{
+    background: transparent !important;
+    background-color: transparent !important;
+}
 .fi-ta-ctn-header,
 .fi-sc-tabs{
     background: transparent !important;
@@ -201,6 +223,15 @@ tbody tr {
 .dark\:bg-gray-900:is(.dark *),
 :is(.dark *) .dark\:bg-gray-900,
 :is(.dark *) .bg-gray-900 {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+.dark.bg-gray-800,
+.dark .bg-gray-800,
+.dark\:bg-gray-800:is(.dark *),
+:is(.dark *) .dark\:bg-gray-800,
+:is(.dark *) .bg-gray-800 {
     background: transparent !important;
     background-color: transparent !important;
 }
