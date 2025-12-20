@@ -40,6 +40,20 @@ class StarryNightPlugin implements Plugin
             return '<link rel="stylesheet" href="'.asset('plugins/starrynight/css/starry-night.css').'">';
         });
 
+        $panel->renderHook('panels::head.end', function () {
+                return <<<'JS'
+    <script>
+        try {
+            localStorage.setItem('theme', 'dark');
+            document.documentElement.style.setProperty('--default-theme-mode', 'dark');
+            document.documentElement.classList.add('dark');
+            window.dispatchEvent(new CustomEvent('theme-changed', { detail: 'dark' }));
+        } catch (e) {
+        }
+    </script>
+    JS;
+        });
+
         $panel->renderHook('panels::body.start', function () {
               $meteorHtml = '<section class="starrynight-meteors">
                 <span></span>
