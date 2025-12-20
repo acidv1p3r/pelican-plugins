@@ -49,7 +49,7 @@ class StarryNightPlugin implements Plugin
             $light = asset('plugins/starrynight/css/starry-night-light.css');
 
             return <<<HTML
-<link id="starrynight-css" rel="stylesheet" href="{$light}">
+<link id="starrynight-css" rel="stylesheet">
 <script>
 (function () {
     var dark = "{$dark}";
@@ -98,6 +98,11 @@ class StarryNightPlugin implements Plugin
 
     function apply() {
         var info = detectThemeDetail();
+
+        if (!info || info.source === 'default' || info.source === 'prefers-color-scheme') {
+            return info;
+        }
+
         var useDark = !!info.useDark;
         var el = document.getElementById('starrynight-css');
         if (!el) {
@@ -107,7 +112,7 @@ class StarryNightPlugin implements Plugin
             document.head.appendChild(el);
         }
         var target = useDark ? dark : light;
-        if (el.href !== target) el.href = target;
+        if (el.getAttribute('href') !== target) el.setAttribute('href', target);
         return info;
     }
 
@@ -125,7 +130,7 @@ class StarryNightPlugin implements Plugin
 
     try { apply(); } catch (e) {}
 })();
-</script>
+<1script>
 HTML;
         });
 
