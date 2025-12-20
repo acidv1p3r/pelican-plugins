@@ -113,6 +113,16 @@ class StarryNightPlugin implements Plugin
         }
         var target = useDark ? dark : light;
         if (el.getAttribute('href') !== target) el.setAttribute('href', target);
+        try {
+            var starColor = useDark ? '#ffffff' : '#b86b1a';
+            var starTrail = useDark ? 'rgba(255,255,255,0.9)' : 'rgba(184,107,26,0.95)';
+            var starGlow = useDark ? 'rgba(255,255,255,0.1)' : 'rgba(184,107,26,0.12)';
+            var meteorColor = useDark ? '#ffffff' : '#b86b1a';
+            document.documentElement.style.setProperty('--sn-star-color', starColor);
+            document.documentElement.style.setProperty('--sn-star-trail-color', starTrail);
+            document.documentElement.style.setProperty('--sn-star-glow', starGlow);
+            document.documentElement.style.setProperty('--sn-meteor-color', meteorColor);
+        } catch (e) {}
         return info;
     }
 
@@ -147,29 +157,30 @@ HTML;
                 <span></span>
                 <span></span>
             </section>';
-            $meteorCss = <<<'CSS'
-    <style>
-    .starrynight-meteors { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; pointer-events: none; z-index: 2; overflow: hidden; }
-    .starrynight-meteors span { position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; background: #fff; border-radius: 50%; box-shadow: 0 0 0 4px rgba(255,255,255,0.1),0 0 0 8px rgba(255,255,255,0.1),0 0 20px rgba(255,255,255,0.1); animation: animate 3s linear infinite; }
-    .starrynight-meteors span::before { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 300px; height: 1px; background: linear-gradient(90deg,#fff,transparent); }
-    @keyframes animate { 0% { transform: rotate(315deg) translateX(0); opacity: 1; } 70% { opacity: 1; } 100% { transform: rotate(315deg) translateX(-1000px); opacity: 0; } }
-    .starrynight-meteors span:nth-child(1) { top: 0; right: 0; left: initial; animation-delay: 0s; animation-duration: 1s; }
-    .starrynight-meteors span:nth-child(2) { top: 0; right: 80px; left: initial; animation-delay: 0.2s; animation-duration: 3s; }
-    .starrynight-meteors span:nth-child(3) { top: 80px; right: 0px; left: initial; animation-delay: 0.4s; animation-duration: 2s; }
-    .starrynight-meteors span:nth-child(4) { top: 0; right: 180px; left: initial; animation-delay: 0.6s; animation-duration: 1.5s; }
-    .starrynight-meteors span:nth-child(5) { top: 0; right: 400px; left: initial; animation-delay: 0.8s; animation-duration: 2.5s; }
-    .starrynight-meteors span:nth-child(6) { top: 0; right: 600px; left: initial; animation-delay: 1s; animation-duration: 3s; }
-    .starrynight-meteors span:nth-child(7) { top: 300px; right: 0px; left: initial; animation-delay: 1.2s; animation-duration: 1.75s; }
-    .starrynight-meteors span:nth-child(8) { top: 0px; right: 700px; left: initial; animation-delay: 1.4s; animation-duration: 1.25s; }
-    .starrynight-meteors span:nth-child(9) { top: 0px; right: 1000px; left: initial; animation-delay: 0.75s; animation-duration: 2.25s; }
-    .starrynight-meteors span:nth-child(10) { top: 0px; right: 450px; left: initial; animation-delay: 2.75s; animation-duration: 2.75s; }
-    </style>
-    CSS;
+                $meteorCss = <<<'CSS'
+            <style>
+            .starrynight-meteors { position: absolute; top: 0; left: 0; width: 100%; height: 100vh; pointer-events: none; z-index: 2; overflow: hidden; }
+            .starrynight-meteors span { position: absolute; top: 50%; left: 50%; width: 4px; height: 4px; background: var(--sn-meteor-color, #fff); border-radius: 50%; box-shadow: 0 0 0 4px var(--sn-star-glow, rgba(255,255,255,0.1)),0 0 0 8px var(--sn-star-glow, rgba(255,255,255,0.1)),0 0 20px var(--sn-star-glow, rgba(255,255,255,0.1)); animation: animate 3s linear infinite; }
+            .starrynight-meteors span::before { content: ""; position: absolute; top: 50%; transform: translateY(-50%); width: 300px; height: 1px; background: linear-gradient(90deg,var(--sn-star-trail-color, #fff),transparent); }
+            @keyframes animate { 0% { transform: rotate(315deg) translateX(0); opacity: 1; } 70% { opacity: 1; } 100% { transform: rotate(315deg) translateX(-1000px); opacity: 0; } }
+            .starrynight-meteors span:nth-child(1) { top: 0; right: 0; left: initial; animation-delay: 0s; animation-duration: 1s; }
+            .starrynight-meteors span:nth-child(2) { top: 0; right: 80px; left: initial; animation-delay: 0.2s; animation-duration: 3s; }
+            .starrynight-meteors span:nth-child(3) { top: 80px; right: 0px; left: initial; animation-delay: 0.4s; animation-duration: 2s; }
+            .starrynight-meteors span:nth-child(4) { top: 0; right: 180px; left: initial; animation-delay: 0.6s; animation-duration: 1.5s; }
+            .starrynight-meteors span:nth-child(5) { top: 0; right: 400px; left: initial; animation-delay: 0.8s; animation-duration: 2.5s; }
+            .starrynight-meteors span:nth-child(6) { top: 0; right: 600px; left: initial; animation-delay: 1s; animation-duration: 3s; }
+            .starrynight-meteors span:nth-child(7) { top: 300px; right: 0px; left: initial; animation-delay: 1.2s; animation-duration: 1.75s; }
+            .starrynight-meteors span:nth-child(8) { top: 0px; right: 700px; left: initial; animation-delay: 1.4s; animation-duration: 1.25s; }
+            .starrynight-meteors span:nth-child(9) { top: 0px; right: 1000px; left: initial; animation-delay: 0.75s; animation-duration: 2.25s; }
+            .starrynight-meteors span:nth-child(10) { top: 0px; right: 450px; left: initial; animation-delay: 2.75s; animation-duration: 2.75s; }
+            </style>
+            CSS;
             $starDiv = '<div id="starrynight-stars" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3;"></div>';
             $starStyle = <<<'CSS'
 <style>
 .static-star, .flickering-star {
     transition: opacity 1.2s cubic-bezier(0.4,0,0.2,1), filter 1.2s cubic-bezier(0.4,0,0.2,1);
+    background: var(--sn-star-color, #fff);
 }
 .static-star {
     opacity: 0.8;
@@ -177,7 +188,7 @@ HTML;
 }
 .flickering-star {
     opacity: 1;
-    filter: brightness(1.7) drop-shadow(0 0 6px #fff);
+    filter: brightness(1.7) drop-shadow(0 0 6px var(--sn-star-color, #fff));
 }
 </style>
 CSS;

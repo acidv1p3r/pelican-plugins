@@ -1,3 +1,12 @@
+:root {
+    --sn-star-color: #b86b1a;
+    --sn-star-trail-color: rgba(184,107,26,0.95);
+    --sn-star-glow: rgba(184,107,26,0.12);
+    --sn-meteor-color: #b86b1a;
+    --sn-meteor-inner: rgba(255,244,220,1);
+    --sn-meteor-mid: rgba(255,224,140,0.9);
+}
+
 
 body {
     background: linear-gradient(135deg, #efe6ff 0%, #e6d1ff 45%, #ead6ff 100%) !important;
@@ -72,24 +81,12 @@ tbody tr {
     position: absolute;
     width: 2px;
     height: 2px;
-    background: #ffd54f; 
-    border-radius: 50%;
-    opacity: 0.9;
-    box-shadow: 0 0 8px rgba(255,213,79,0.6), 0 0 18px rgba(255,235,132,0.18);
-    z-index: 1;
-    pointer-events: none;
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.static-star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background: #fff59d !important; 
+    background: var(--sn-star-color) !important;
     border-radius: 50% !important;
     width: 3px;
     height: 3px;
-    opacity: 1 !important;
-    box-shadow: 0 0 14px rgba(255,222,120,0.95) !important, 0 0 28px rgba(255,235,132,0.30) !important;
+    opacity: 0.95 !important;
+    box-shadow: 0 0 10px var(--sn-star-glow, rgba(184,107,26,0.6)) !important, 0 0 24px rgba(0,0,0,0.06) !important;
     z-index: 70 !important;
     pointer-events: none;
     transition: opacity 0.45s ease, transform 0.45s ease;
@@ -99,23 +96,12 @@ tbody tr {
     position: absolute;
     width: 3px;
     height: 3px;
-    background: #fff176;
-    border-radius: 50%;
-    z-index: 2;
-    pointer-events: none;
-    animation: light-flicker 2s infinite ease-in-out;
-    box-shadow: 0 0 10px rgba(255,213,79,0.65), 0 0 24px rgba(255,235,132,0.15);
-}
-.flickering-star {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: #fff176 !important;
+    background: var(--sn-star-color) !important;
     border-radius: 50% !important;
     z-index: 80 !important;
     pointer-events: none;
     animation: light-flicker 2s infinite ease-in-out;
-    box-shadow: 0 0 18px rgba(255,244,160,0.95) !important, 0 0 40px rgba(255,245,157,0.28) !important;
+    box-shadow: 0 0 14px var(--sn-star-glow, rgba(184,107,26,0.9)) !important, 0 0 36px rgba(0,0,0,0.08) !important;
 }
 
 @keyframes light-flicker {
@@ -129,24 +115,13 @@ tbody tr {
     position: fixed;
     width: 6px;
     height: 6px;
-    border-radius: 50%;
-    z-index: 3;
-    pointer-events: none;
-    background: radial-gradient(circle at 30% 30%, #fff9e0 0%, #ffe082 30%, #ffd54f 60%);
-    box-shadow: 0 0 18px 8px rgba(255,213,79,0.55), 0 0 40px 16px rgba(255,203,64,0.18);
-    opacity: 0;
-}
-.meteor-star {
-    position: fixed;
-    width: 6px;
-    height: 6px;
     border-radius: 50% !important;
     z-index: 90 !important;
     pointer-events: none;
     width: 7px;
     height: 7px;
-    background: radial-gradient(circle at 30% 30%, #fff9d0 0%, #ffec9a 25%, #ffd54f 55%, #ffc107 85%) !important;
-    box-shadow: 0 0 30px 14px rgba(255,218,95,0.9) !important, 0 0 56px 28px rgba(255,200,60,0.25) !important;
+    background: radial-gradient(circle at 30% 30%, var(--sn-meteor-inner, rgba(255,244,220,1)) 0%, var(--sn-meteor-mid, rgba(255,224,140,0.9)) 30%, var(--sn-meteor-color) 60%) !important;
+    box-shadow: 0 0 30px 14px rgba(184,107,26,0.9) !important, 0 0 56px 28px rgba(184,107,26,0.25) !important;
     opacity: 0;
 }
 
@@ -155,27 +130,14 @@ tbody tr {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 90px;
-    height: 2px;
-    background: linear-gradient(90deg, rgba(255,213,79,0.95) 0%, rgba(255,213,79,0.6) 30%, rgba(255,213,79,0.15) 70%, rgba(255,213,79,0) 100%);
-    opacity: 0.9;
-    transform: translate(3px, -1px) rotate(-20deg);
-    transform-origin: left center;
-    pointer-events: none;
-}
-.meteor-star::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
     width: 110px;
     height: 3px;
-    background: linear-gradient(90deg, rgba(255,230,120,1) 0%, rgba(255,220,100,0.85) 30%, rgba(255,200,60,0.3) 70%, rgba(255,200,60,0) 100%) !important;
+    background: linear-gradient(90deg, var(--sn-star-trail-color, rgba(184,107,26,1)) 0%, rgba(184,107,26,0.85) 30%, rgba(184,107,26,0.3) 70%, rgba(184,107,26,0) 100%) !important;
     opacity: 1 !important;
     transform: translate(6px, -1px) rotate(-20deg);
     transform-origin: left center;
     pointer-events: none;
-    filter: drop-shadow(0 0 8px rgba(255,220,100,0.6));
+    filter: drop-shadow(0 0 8px rgba(184,107,26,0.6));
 }
 
 
@@ -184,8 +146,8 @@ tbody tr {
 }
 
 .meteor-star.colored {
-    background: linear-gradient(135deg, #ffd54f, #fff176, #ffc107);
-    box-shadow: 0 0 18px 6px rgba(255,203,64,0.4), 0 0 36px 12px rgba(255,224,130,0.12);
+    background: linear-gradient(135deg, var(--sn-meteor-color), var(--sn-meteor-mid), var(--sn-meteor-inner));
+    box-shadow: 0 0 18px 6px rgba(184,107,26,0.4), 0 0 36px 12px rgba(184,107,26,0.12);
 }
 
 @keyframes meteor-arc {
