@@ -14,26 +14,33 @@ class StarryNightPluginProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $source = __DIR__.'/../../css/starry-night.css';
-        $destination = public_path('plugins/starrynight/css/starry-night.css');
+        $sourceDark = __DIR__.'/../../css/starry-night.css';
+        $destDark = public_path('plugins/starrynight/css/starry-night.css');
+
+        $sourceLight = __DIR__.'/../../css/starry-night-light.css';
+        $destLight = public_path('plugins/starrynight/css/starry-night-light.css');
 
         $this->publishes([
-            $source => $destination,
+            $sourceDark => $destDark,
+            $sourceLight => $destLight,
         ], 'starrynight-assets');
-        $this->ensureCssPublished();
     }
 
     private function ensureCssPublished(): void
     {
-        $source = __DIR__.'/../../css/starry-night.css';
-        $destination = public_path('plugins/starrynight/css/starry-night.css');
+        $pairs = [
+            [__DIR__.'/../../css/starry-night.css', public_path('plugins/starrynight/css/starry-night.css')],
+            [__DIR__.'/../../css/starry-night-light.css', public_path('plugins/starrynight/css/starry-night-light.css')],
+        ];
 
-        if (! File::exists($destination) && File::exists($source)) {
-            $dir = dirname($destination);
-            if (! File::isDirectory($dir)) {
-                File::makeDirectory($dir, 0755, true);
+        foreach ($pairs as [$source, $destination]) {
+            if (! File::exists($destination) && File::exists($source)) {
+                $dir = dirname($destination);
+                if (! File::isDirectory($dir)) {
+                    File::makeDirectory($dir, 0755, true);
+                }
+                File::copy($source, $destination);
             }
-            File::copy($source, $destination);
         }
     }
 }

@@ -16,15 +16,23 @@ class StarryNightPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        $source = __DIR__.'/../../css/starry-night.css';
-        $destination = public_path('plugins/starrynight/css/starry-night.css');
+        $pairs = [
+            [__DIR__.'/../../css/starry-night.css', public_path('plugins/starrynight/css/starry-night.css')],
+            [__DIR__.'/../../css/starry-night-light.css', public_path('plugins/starrynight/css/starry-night-light.css')],
+        ];
 
-        if (! File::exists($destination)) {
-            $dir = dirname($destination);
-            if (! File::isDirectory($dir)) {
-                File::makeDirectory($dir, 0755, true);
+        foreach ($pairs as [$source, $destination]) {
+            try {
+                if (! File::exists($destination) && File::exists($source)) {
+                    $dir = dirname($destination);
+                    if (! File::isDirectory($dir)) {
+                        File::makeDirectory($dir, 0755, true);
+                    }
+                    File::copy($source, $destination);
+                }
+            } catch (\Throwable $e) {
+
             }
-            File::copy($source, $destination);
         }
 
         $panel->colors([
@@ -37,21 +45,88 @@ class StarryNightPlugin implements Plugin
         ]);
 
         $panel->renderHook('panels::head.end', function () {
-            return '<link rel="stylesheet" href="'.asset('plugins/starrynight/css/starry-night.css').'">';
-        });
+            $dark = asset('plugins/starrynight/css/starry-night.css');
+            $light = asset('plugins/starrynight/css/starry-night-light.css');
 
-        $panel->renderHook('panels::head.end', function () {
-                return <<<'JS'
-    <script>
+            return <<<HTML
+<link id="starrynight-css" rel="stylesheet" href="{$light}">
+<script>
+(function () {
+    var dark = "{$dark}";
+    var light = "{$light}";
+
+    function detectThemeDetail() {
+        if (document.documentElement && document.documentElement.classList.contains && document.documentElement.classList.contains('dark')) {
+            return { useDark: true, source: 'html.class' };
+        }
+
+        var htmlTheme = document.documentElement && document.documentElement.getAttribute && document.documentElement.getAttribute('data-theme');
+        if (htmlTheme) {
+            var v = ('' + htmlTheme).toLowerCase();
+            return { useDark: v === 'dark', source: 'html.data-theme', details: htmlTheme };
+        }
+
         try {
-            localStorage.setItem('theme', 'dark');
-            document.documentElement.style.setProperty('--default-theme-mode', 'dark');
-            document.documentElement.classList.add('dark');
-            window.dispatchEvent(new CustomEvent('theme-changed', { detail: 'dark' }));
+            var keys = ['filament_theme', 'theme', 'filamentTheme'];
+            for (var i = 0; i < keys.length; i++) {
+                var k = keys[i];
+                var val = localStorage.getItem(k);
+                if (val) {
+                    var lv = ('' + val).toLowerCase();
+                    if (lv === 'dark' || lv === 'light') return { useDark: lv === 'dark', source: 'localStorage.' + k, details: val };
+                }
+            }
+
+            var cap = Math.min(localStorage.length || 0, 50);
+            for (var j = 0; j < cap; j++) {
+                var key = localStorage.key(j);
+                if (!key) continue;
+                if (!/filament|theme/i.test(key)) continue;
+                var v2 = localStorage.getItem(key);
+                if (v2) {
+                    var vl = ('' + v2).toLowerCase();
+                    if (vl === 'dark' || vl === 'light') return { useDark: vl === 'dark', source: 'localStorage.' + key, details: v2 };
+                }
+            }
         } catch (e) {
         }
-    </script>
-    JS;
+
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return { useDark: true, source: 'prefers-color-scheme' };
+
+        return { useDark: false, source: 'default' };
+    }
+
+    function apply() {
+        var info = detectThemeDetail();
+        var useDark = !!info.useDark;
+        var el = document.getElementById('starrynight-css');
+        if (!el) {
+            el = document.createElement('link');
+            el.rel = 'stylesheet';
+            el.id = 'starrynight-css';
+            document.head.appendChild(el);
+        }
+        var target = useDark ? dark : light;
+        if (el.href !== target) el.href = target;
+        return info;
+    }
+
+    try {
+        var obs = new MutationObserver(apply);
+        if (document.documentElement) obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'data-theme'] });
+        if (document.body) obs.observe(document.body, { attributes: true, attributeFilter: ['class', 'data-theme'] });
+    } catch (e) {}
+
+    window.addEventListener('storage', function (e) { if (e && e.key === 'filament_theme') apply(); });
+    window.addEventListener('theme-changed', apply);
+    if (window.matchMedia) {
+        try { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', apply); } catch (e) { try { window.matchMedia('(prefers-color-scheme: dark)').addListener(apply); } catch (e) {} }
+    }
+
+    try { apply(); } catch (e) {}
+})();
+</script>
+HTML;
         });
 
         $panel->renderHook('panels::body.start', function () {
