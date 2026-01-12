@@ -17,8 +17,8 @@ class StarryNightPlugin implements Plugin
     public function register(Panel $panel): void
     {
         $pairs = [
-            [__DIR__.'/../../css/starry-night.css', public_path('plugins/starrynight/css/starry-night.css')],
-            [__DIR__.'/../../css/starry-night-light.css', public_path('plugins/starrynight/css/starry-night-light.css')],
+            [__DIR__.'/../../css/starry-night.css', public_path('plugins/night/css/starry-night.css')],
+            [__DIR__.'/../../css/starry-night-light.css', public_path('plugins/night/css/starry-night-light.css')],
         ];
 
         foreach ($pairs as [$source, $destination]) {
@@ -45,8 +45,8 @@ class StarryNightPlugin implements Plugin
         ]);
 
         $panel->renderHook('panels::head.end', function () {
-            $dark = asset('plugins/starrynight/css/starry-night.css');
-            $light = asset('plugins/starrynight/css/starry-night-light.css');
+            $dark = asset('plugins/night/css/starry-night.css');
+            $light = asset('plugins/night/css/starry-night-light.css');
 
             return <<<HTML
 <link id="starrynight-css" rel="stylesheet">
