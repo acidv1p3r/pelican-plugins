@@ -8,7 +8,7 @@
     "url": "https://github.com/acidv1p3r/pelican-plugins",
     "update_url": "",
     "namespace": "Acidv1p3r\\Night",
-    "class": "StarryNightPlugin",
+    "class": "NightPlugin",
     "panels": [
         "admin",
         "server",
