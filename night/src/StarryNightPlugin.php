@@ -1,6 +1,6 @@
 <?php
 
-namespace JoanFo\StarryNight;
+namespace Acidv1p3r\Night;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
