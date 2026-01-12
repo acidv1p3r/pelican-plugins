@@ -15,10 +15,10 @@ class StarryNightPluginProvider extends ServiceProvider
     public function boot(): void
     {
         $sourceDark = __DIR__.'/../../css/starry-night.css';
-        $destDark = public_path('plugins/starrynight/css/starry-night.css');
+        $destDark = public_path('plugins/night/css/starry-night.css');
 
         $sourceLight = __DIR__.'/../../css/starry-night-light.css';
-        $destLight = public_path('plugins/starrynight/css/starry-night-light.css');
+        $destLight = public_path('plugins/night/css/starry-night-light.css');
 
         $this->publishes([
             $sourceDark => $destDark,
