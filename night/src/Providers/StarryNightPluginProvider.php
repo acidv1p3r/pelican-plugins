@@ -1,6 +1,6 @@
 <?php
 
-namespace JoanFo\StarryNight\Providers;
+namespace Acidv1p3r\Night\Providers;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
