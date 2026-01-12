@@ -1,0 +1,23 @@
+{
+    "id": "night",
+    "name": "Night",
+    "author": "Acidv1p3r",
+    "version": "1.0.0",
+    "description": "Who doesn't like the night, with flickering stars?",
+    "category": "theme",
+    "url": "https://github.com/acidv1p3r/pelican-plugins",
+    "update_url": "",
+    "namespace": "Acidv1p3r\\StarryNight",
+    "class": "StarryNightPlugin",
+    "panels": [
+        "admin",
+        "server",
+        "app"
+    ],
+    "panel_version": null,
+    "composer_packages": null,
+    "meta": {
+        "status": "not_installed",
+        "status_message": null
+    }
+}
