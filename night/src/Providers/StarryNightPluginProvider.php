@@ -29,8 +29,8 @@ class StarryNightPluginProvider extends ServiceProvider
     private function ensureCssPublished(): void
     {
         $pairs = [
-            [__DIR__.'/../../css/starry-night.css', public_path('plugins/starrynight/css/starry-night.css')],
-            [__DIR__.'/../../css/starry-night-light.css', public_path('plugins/starrynight/css/starry-night-light.css')],
+            [__DIR__.'/../../css/starry-night.css', public_path('plugins/night/css/starry-night.css')],
+            [__DIR__.'/../../css/starry-night-light.css', public_path('plugins/night/css/starry-night-light.css')],
         ];
 
         foreach ($pairs as [$source, $destination]) {
